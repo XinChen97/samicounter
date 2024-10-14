@@ -891,7 +891,7 @@ function Uo(e, t, ...n) {
     const o = t.startsWith("update:"),
         r = o && t.slice(7);
     if (r && r in s) {
-        const m = `${r === "modelValue" ? "model" : r}Modifiers`,
+        const m = `${r==="modelValue"?"model":r}Modifiers`,
             {
                 number: v,
                 trim: E
@@ -3095,7 +3095,7 @@ const Ee = (e, t) => {
                 sixcount: "",
                 fivecount: "",
                 fourcount: "",
-                six: 50,
+                six: 30,
                 five: 20,
                 four: 10,
                 linshicount: 0
@@ -3130,7 +3130,7 @@ const Ee = (e, t) => {
     ll = {
         class: "part"
     },
-    ul = c("div", null, " 临时招募(不计算“愤怒”板) ", -1),
+    ul = c("div", null, " 临时招募", -1),
     cl = {
         class: "but-count"
     },
@@ -3142,7 +3142,7 @@ const Ee = (e, t) => {
     };
 
 function hl(e, t, n, s, i, o) {
-    return we(), Ce("div", ll, [ul, c("div", null, " 得分：" + T(o.linshiscore), 1), c("div", null, [_(" 六星(50)"), c("button", {
+    return we(), Ce("div", ll, [ul, c("div", null, " 得分：" + T(o.linshiscore), 1), c("div", null, [_(" 六星(30)"), c("button", {
         class: "changecountlinshi",
         onClick: t[0] || (t[0] = (...r) => o.sixcountjian && o.sixcountjian(...r))
     }, "-"), c("span", cl, T(i.sixcount), 1), c("button", {
@@ -3155,7 +3155,7 @@ function hl(e, t, n, s, i, o) {
         maxlength: "2"
     }, null, 512), [
         [H, i.sixcount]
-    ]), _(T(i.sixcount * 50), 1)]), c("div", null, [_(" 五星(20)"), c("button", {
+    ]), _(T(i.sixcount * 30), 1)]), c("div", null, [_(" 五星(20)"), c("button", {
         class: "changecountlinshi",
         onClick: t[3] || (t[3] = (...r) => o.fivecountjian && o.fivecountjian(...r))
     }, "-"), c("span", fl, T(i.fivecount), 1), c("button", {
@@ -3356,356 +3356,219 @@ const El = Ee(bl, [
     ["render", Cl]
 ]);
 const zl = {
-        data() {
-            return {
-                jinjisco: [20, 30, 20, 30, 20, 90, 110, 50, 50, 70, 35, 55, 90],
-                jinjifra: ["", "", "", "", "", "", "", "", "", "", "", "", ""],
-                jinjicount: 0
-            }
-        },
+    data() {
+        return {
+            jinjisco: [
+                15, // 冰海疑影
+                25, // 冰海疑影无漏
+                25, // 冰海疑影路网
+                35, // 冰海疑影路网无漏
+                10, // 17斧手
+                15, // 公司纠葛
+                25, // 公司纠葛无漏
+                20, // 公司纠葛路网
+                35, // 公司纠葛路网无漏
+                40, // 何处无山海无漏
+                35, // 何处无山海路网
+                50, // 何处无山海路网无漏
+                30, // 本能污染
+                40, // 本能污染无漏
+                35, // 本能污染开局木烈
+                45, // 本能污染开局木烈无漏
+                30, // 亡者行军
+                45, // 亡者行军无漏
+                40, // 亡者行军路网
+                55, // 亡者行军路网无漏
+                30, // 乐理之灾
+                45, // 乐理之灾无漏
+                40, // 乐理之灾路网
+                55, // 乐理之灾路网无漏
+                5,  // 左四琴
+                20, // 霜与沙
+                40, // 霜与沙无漏
+                40, // 生灵的终点
+                70, // 生灵的终点无漏
+                20, // 禁区
+                30, // 禁区无漏
+                30, // 禁区路网
+                40, // 禁区路网无漏
+                20, // 坍缩体的午后
+                30, // 坍缩体的午后无漏
+                30, // 坍缩体的午后路网
+                40, // 坍缩体的午后路网无漏
+                20, // 混乱的表象
+                30, // 混乱的表象路网
+                25  // 何处无山海
+            ],
+            jinjifra: Array(40).fill(0), // Inicializa todos los conteos a cero para las 40 operaciones
+            jinjicount: 0
+        };
+    },
+
         computed: {
             jinjiscore: function() {
                 this.jinjicount = 0;
-                for (let e = 0; e < 13; e++) this.jinjicount += this.jinjifra[e] * 1 * this.jinjisco[e];
+                for (let e = 0; e < this.jinjifra.length; e++) 
+                    this.jinjicount += this.jinjifra[e] * 1 * this.jinjisco[e];
                 return this.$emit("setjinji", this.jinjicount), this.jinjicount
             }
         },
         methods: {
             binghaiyiyingjia: function() {
-                this.jinjifra[0] = this.jinjifra[0] * 1 + 1
+                this.jinjifra[0]++;
             },
             binghaiyiyingjian: function() {
-                this.jinjifra[0] <= 0 ? this.jinjifra[0] = 0 : this.jinjifra[0] = this.jinjifra[0] * 1 - 1
+                this.jinjifra[0] <= 0 ? this.jinjifra[0] = 0 : this.jinjifra[0]--;
             },
-            luwangbinghaiyiyingjia: function() {
-                this.jinjifra[1] = this.jinjifra[1] * 1 + 1
+            binghaiyiyingwuloujia: function(){
+                this.jinjifra[1]++;
             },
-            luwangbinghaiyiyingjian: function() {
-                this.jinjifra[1] <= 0 ? this.jinjifra[1] = 0 : this.jinjifra[1] = this.jinjifra[1] * 1 - 1
+            binghaiyiyingwuloujian:function(){
+                this.jinjifra[1] <= 0 ? this.jinjifra[1] = 0 : this.jinjifra[1]--;
             },
-            gongsijiugejia: function() {
-                this.jinjifra[2] = this.jinjifra[2] * 1 + 1
+            binghaiyiyingluwangjia: function() {
+                this.jinjifra[2]++;
             },
-            gongsijiugejian: function() {
-                this.jinjifra[2] <= 0 ? this.jinjifra[2] = 0 : this.jinjifra[2] = this.jinjifra[2] * 1 - 1
+            binghaiyiyingluwangjian: function() {
+                this.jinjifra[2] <= 0 ? this.jinjifra[2] = 0 : this.jinjifra[2]--;
             },
-            luwanggongsijiugejia: function() {
-                this.jinjifra[3] = this.jinjifra[3] * 1 + 1
+            binghaiyiyingluwangwuloujia: function(){
+                this.jinjifra[3]++;
             },
-            luwanggongsijiugejian: function() {
-                this.jinjifra[3] <= 0 ? this.jinjifra[3] = 0 : this.jinjifra[3] = this.jinjifra[3] * 1 - 1
+            binghaiyiyingluwangwuloujian:function(){
+                this.jinjifra[3] <= 0 ? this.jinjifra[3] = 0 : this.jinjifra[3]--;
             },
-            tansuotidewuhoujia: function() {
-                this.jinjifra[4] = this.jinjifra[4] * 1 + 1
-            },
-            tansuotidewuhoujian: function() {
-                this.jinjifra[4] <= 0 ? this.jinjifra[4] = 0 : this.jinjifra[4] = this.jinjifra[4] * 1 - 1
-            },
-            renzaowujia: function() {
-                this.jinjifra[5] = this.jinjifra[5] * 1 + 1
-            },
-            renzaowujian: function() {
-                this.jinjifra[5] <= 0 ? this.jinjifra[5] = 0 : this.jinjifra[5] = this.jinjifra[5] * 1 - 1
-            },
-            luwangrenzaowujia: function() {
-                this.jinjifra[6] = this.jinjifra[6] * 1 + 1
-            },
-            luwangrenzaowujian: function() {
-                this.jinjifra[6] <= 0 ? this.jinjifra[6] = 0 : this.jinjifra[6] = this.jinjifra[6] * 1 - 1
-            },
-            bennengwuranjia: function() {
-                this.jinjifra[7] = this.jinjifra[7] * 1 + 1
-            },
-            bennengwuranjian: function() {
-                this.jinjifra[7] <= 0 ? this.jinjifra[7] = 0 : this.jinjifra[7] = this.jinjifra[7] * 1 - 1
-            },
-            wangzhexingjunjia: function() {
-                this.jinjifra[8] = this.jinjifra[8] * 1 + 1
-            },
-            wangzhexingjunjian: function() {
-                this.jinjifra[8] <= 0 ? this.jinjifra[8] = 0 : this.jinjifra[8] = this.jinjifra[8] * 1 - 1
-            },
-            luwangwangzhexingjunjia: function() {
-                this.jinjifra[9] = this.jinjifra[9] * 1 + 1
-            },
-            luwangwangzhexingjunjian: function() {
-                this.jinjifra[9] <= 0 ? this.jinjifra[9] = 0 : this.jinjifra[9] = this.jinjifra[9] * 1 - 1
-            },
-            yuelizhizaijia: function() {
-                this.jinjifra[10] = this.jinjifra[10] * 1 + 1
-            },
-            yuelizhizaijian: function() {
-                this.jinjifra[10] <= 0 ? this.jinjifra[10] = 0 : this.jinjifra[10] = this.jinjifra[10] * 1 - 1
-            },
-            luwangyuelizhizaijia: function() {
-                this.jinjifra[11] = this.jinjifra[11] * 1 + 1
-            },
-            luwangyuelizhizaijian: function() {
-                this.jinjifra[11] <= 0 ? this.jinjifra[11] = 0 : this.jinjifra[11] = this.jinjifra[11] * 1 - 1
-            },
-            shenglingdezhongdianjia: function() {
-                this.jinjifra[12] = this.jinjifra[12] * 1 + 1
-            },
-            shenglingdezhongdianjian: function() {
-                this.jinjifra[12] <= 0 ? this.jinjifra[12] = 0 : this.jinjifra[12] = this.jinjifra[12] * 1 - 1
-            }
         }
     },
     Ol = {
         class: "part2"
     },
-    Tl = c("div", null, " 携带路网时如果不能无漏则按原本分数计算 ", -1),
-    kl = {
+    aa1 = {
         class: "jinjidefen"
     },
-    Pl = {
+    aa2 = {
         class: "but-count"
     },
-    Il = {
+    ab1 = {
         class: "jinjidefen"
     },
-    Ul = {
+    ab2 = {
+        class: "but-count"
+    },    
+    ac1 = {
+        class: "jinjidefen"
+    },
+    ac2 = {
         class: "but-count"
     },
-    Ml = {
+    ad1 = {
         class: "jinjidefen"
     },
-    Al = {
-        class: "but-count"
-    },
-    Fl = {
-        class: "jinjidefen"
-    },
-    Sl = {
-        class: "but-count"
-    },
-    Vl = {
-        class: "jinjidefen"
-    },
-    Rl = {
-        class: "but-count"
-    },
-    Nl = {
-        class: "jinjidefen"
-    },
-    Hl = {
-        class: "but-count"
-    },
-    Bl = {
-        class: "jinjidefen"
-    },
-    Kl = {
-        class: "but-count"
-    },
-    Ll = {
-        class: "jinjidefen"
-    },
-    Dl = {
-        class: "but-count"
-    },
-    Wl = {
-        class: "jinjidefen"
-    },
-    ql = {
-        class: "but-count"
-    },
-    Jl = {
-        class: "jinjidefen"
-    },
-    Yl = {
-        class: "but-count"
-    },
-    Xl = {
-        class: "jinjidefen"
-    },
-    Zl = {
-        class: "but-count"
-    },
-    Ql = {
-        class: "jinjidefen"
-    },
-    Gl = {
-        class: "but-count"
-    },
-    $l = {
-        class: "jinjidefen"
-    },
-    eu = {
+    ad2 = {
         class: "but-count"
     };
 
-function tu(e, t, n, s, i, o) {
-    return we(), Ce("div", Ol, [c("div", null, " 紧急作战得分:" + T(o.jinjiscore), 1), Tl, c("div", null, [_(" 紧急冰海疑影(20)"), c("span", kl, [c("button", {
-        class: "changecount",
-        onClick: t[0] || (t[0] = (...r) => o.binghaiyiyingjian && o.binghaiyiyingjian(...r))
-    }, "-"), c("span", Pl, T(i.jinjifra[0]), 1), c("button", {
-        class: "changecount",
-        onClick: t[1] || (t[1] = (...r) => o.binghaiyiyingjia && o.binghaiyiyingjia(...r))
-    }, "+"), k(c("input", {
-        class: "shuru1",
-        "onUpdate:modelValue": t[2] || (t[2] = r => i.jinjifra[0] = r),
-        type: "text",
-        maxlength: "2"
-    }, null, 512), [
-        [H, i.jinjifra[0]]
-    ]), _(T(i.jinjifra[0] * 20), 1)])]), c("div", null, [_(" 紧急冰海疑影路网无漏(30)"), c("span", Il, [c("button", {
-        class: "changecount",
-        onClick: t[3] || (t[3] = (...r) => o.luwangbinghaiyiyingjian && o.luwangbinghaiyiyingjian(...r))
-    }, "-"), c("span", Ul, T(i.jinjifra[1]), 1), c("button", {
-        class: "changecount",
-        onClick: t[4] || (t[4] = (...r) => o.luwangbinghaiyiyingjia && o.luwangbinghaiyiyingjia(...r))
-    }, "+"), k(c("input", {
-        class: "shuru1",
-        "onUpdate:modelValue": t[5] || (t[5] = r => i.jinjifra[1] = r),
-        type: "text",
-        maxlength: "2"
-    }, null, 512), [
-        [H, i.jinjifra[1]]
-    ]), _(T(i.jinjifra[1] * 30), 1)])]), c("div", null, [_(" 紧急公司纠葛(20)"), c("span", Ml, [c("button", {
-        class: "changecount",
-        onClick: t[6] || (t[6] = (...r) => o.gongsijiugejian && o.gongsijiugejian(...r))
-    }, "-"), c("span", Al, T(i.jinjifra[2]), 1), c("button", {
-        class: "changecount",
-        onClick: t[7] || (t[7] = (...r) => o.gongsijiugejia && o.gongsijiugejia(...r))
-    }, "+"), k(c("input", {
-        class: "shuru1",
-        "onUpdate:modelValue": t[8] || (t[8] = r => i.jinjifra[2] = r),
-        type: "text",
-        maxlength: "2"
-    }, null, 512), [
-        [H, i.jinjifra[2]]
-    ]), _(T(i.jinjifra[2] * 20), 1)])]), c("div", null, [_(" 紧急公司纠葛路网无漏(30)"), c("span", Fl, [c("button", {
-        class: "changecount",
-        onClick: t[9] || (t[9] = (...r) => o.luwanggongsijiugejian && o.luwanggongsijiugejian(...r))
-    }, "-"), c("span", Sl, T(i.jinjifra[3]), 1), c("button", {
-        class: "changecount",
-        onClick: t[10] || (t[10] = (...r) => o.luwanggongsijiugejia && o.luwanggongsijiugejia(...r))
-    }, "+"), k(c("input", {
-        class: "shuru1",
-        "onUpdate:modelValue": t[11] || (t[11] = r => i.jinjifra[3] = r),
-        type: "text",
-        maxlength: "2"
-    }, null, 512), [
-        [H, i.jinjifra[3]]
-    ]), _(T(i.jinjifra[3] * 30), 1)])]), c("div", null, [_(" 紧急坍缩体的午后(20)"), c("span", Vl, [c("button", {
-        class: "changecount",
-        onClick: t[12] || (t[12] = (...r) => o.tansuotidewuhoujian && o.tansuotidewuhoujian(...r))
-    }, "-"), c("span", Rl, T(i.jinjifra[4]), 1), c("button", {
-        class: "changecount",
-        onClick: t[13] || (t[13] = (...r) => o.tansuotidewuhoujia && o.tansuotidewuhoujia(...r))
-    }, "+"), k(c("input", {
-        class: "shuru1",
-        "onUpdate:modelValue": t[14] || (t[14] = r => i.jinjifra[4] = r),
-        type: "text",
-        maxlength: "2"
-    }, null, 512), [
-        [H, i.jinjifra[4]]
-    ]), _(T(i.jinjifra[4] * 20), 1)])]), c("div", null, [_(" 紧急人造物(90)"), c("span", Nl, [c("button", {
-        class: "changecount",
-        onClick: t[15] || (t[15] = (...r) => o.renzaowujian && o.renzaowujian(...r))
-    }, "-"), c("span", Hl, T(i.jinjifra[5]), 1), c("button", {
-        class: "changecount",
-        onClick: t[16] || (t[16] = (...r) => o.renzaowujia && o.renzaowujia(...r))
-    }, "+"), k(c("input", {
-        class: "shuru1",
-        "onUpdate:modelValue": t[17] || (t[17] = r => i.jinjifra[5] = r),
-        type: "text",
-        maxlength: "2"
-    }, null, 512), [
-        [H, i.jinjifra[5]]
-    ]), _(T(i.jinjifra[5] * 90), 1)])]), c("div", null, [_(" 紧急人造物路网无漏(110)"), c("span", Bl, [c("button", {
-        class: "changecount",
-        onClick: t[18] || (t[18] = (...r) => o.luwangrenzaowujian && o.luwangrenzaowujian(...r))
-    }, "-"), c("span", Kl, T(i.jinjifra[6]), 1), c("button", {
-        class: "changecount",
-        onClick: t[19] || (t[19] = (...r) => o.luwangrenzaowujia && o.luwangrenzaowujia(...r))
-    }, "+"), k(c("input", {
-        class: "shuru1",
-        "onUpdate:modelValue": t[20] || (t[20] = r => i.jinjifra[6] = r),
-        type: "text",
-        maxlength: "2"
-    }, null, 512), [
-        [H, i.jinjifra[6]]
-    ]), _(T(i.jinjifra[6] * 110), 1)])]), c("div", null, [_(" 紧急本能污染(50)"), c("span", Ll, [c("button", {
-        class: "changecount",
-        onClick: t[21] || (t[21] = (...r) => o.bennengwuranjian && o.bennengwuranjian(...r))
-    }, "-"), c("span", Dl, T(i.jinjifra[7]), 1), c("button", {
-        class: "changecount",
-        onClick: t[22] || (t[22] = (...r) => o.bennengwuranjia && o.bennengwuranjia(...r))
-    }, "+"), k(c("input", {
-        class: "shuru1",
-        "onUpdate:modelValue": t[23] || (t[23] = r => i.jinjifra[7] = r),
-        type: "text",
-        maxlength: "2"
-    }, null, 512), [
-        [H, i.jinjifra[7]]
-    ]), _(T(i.jinjifra[7] * 50), 1)])]), c("div", null, [_(" 紧急亡者行军(50)"), c("span", Wl, [c("button", {
-        class: "changecount",
-        onClick: t[24] || (t[24] = (...r) => o.wangzhexingjunjian && o.wangzhexingjunjian(...r))
-    }, "-"), c("span", ql, T(i.jinjifra[8]), 1), c("button", {
-        class: "changecount",
-        onClick: t[25] || (t[25] = (...r) => o.wangzhexingjunjia && o.wangzhexingjunjia(...r))
-    }, "+"), k(c("input", {
-        class: "shuru1",
-        "onUpdate:modelValue": t[26] || (t[26] = r => i.jinjifra[8] = r),
-        type: "text",
-        maxlength: "2"
-    }, null, 512), [
-        [H, i.jinjifra[8]]
-    ]), _(T(i.jinjifra[8] * 50), 1)])]), c("div", null, [_(" 紧急亡者行军路网无漏(70)"), c("span", Jl, [c("button", {
-        class: "changecount",
-        onClick: t[27] || (t[27] = (...r) => o.luwangwangzhexingjunjian && o.luwangwangzhexingjunjian(...r))
-    }, "-"), c("span", Yl, T(i.jinjifra[9]), 1), c("button", {
-        class: "changecount",
-        onClick: t[28] || (t[28] = (...r) => o.luwangwangzhexingjunjia && o.luwangwangzhexingjunjia(...r))
-    }, "+"), k(c("input", {
-        class: "shuru1",
-        "onUpdate:modelValue": t[29] || (t[29] = r => i.jinjifra[9] = r),
-        type: "text",
-        maxlength: "2"
-    }, null, 512), [
-        [H, i.jinjifra[9]]
-    ]), _(T(i.jinjifra[9] * 70), 1)])]), c("div", null, [_(" 紧急乐理之灾(35)"), c("span", Xl, [c("button", {
-        class: "changecount",
-        onClick: t[30] || (t[30] = (...r) => o.yuelizhizaijian && o.yuelizhizaijian(...r))
-    }, "-"), c("span", Zl, T(i.jinjifra[10]), 1), c("button", {
-        class: "changecount",
-        onClick: t[31] || (t[31] = (...r) => o.yuelizhizaijia && o.yuelizhizaijia(...r))
-    }, "+"), k(c("input", {
-        class: "shuru1",
-        "onUpdate:modelValue": t[32] || (t[32] = r => i.jinjifra[10] = r),
-        type: "text",
-        maxlength: "2"
-    }, null, 512), [
-        [H, i.jinjifra[10]]
-    ]), _(T(i.jinjifra[10] * 35), 1)])]), c("div", null, [_(" 紧急乐理之灾路网无漏(55)"), c("span", Ql, [c("button", {
-        class: "changecount",
-        onClick: t[33] || (t[33] = (...r) => o.luwangyuelizhizaijian && o.luwangyuelizhizaijian(...r))
-    }, "-"), c("span", Gl, T(i.jinjifra[11]), 1), c("button", {
-        class: "changecount",
-        onClick: t[34] || (t[34] = (...r) => o.luwangyuelizhizaijia && o.luwangyuelizhizaijia(...r))
-    }, "+"), k(c("input", {
-        class: "shuru1",
-        "onUpdate:modelValue": t[35] || (t[35] = r => i.jinjifra[11] = r),
-        type: "text",
-        maxlength: "2"
-    }, null, 512), [
-        [H, i.jinjifra[11]]
-    ]), _(T(i.jinjifra[11] * 55), 1)])]), c("div", null, [_(" 紧急生灵的终点(90)"), c("span", $l, [c("button", {
-        class: "changecount",
-        onClick: t[36] || (t[36] = (...r) => o.shenglingdezhongdianjian && o.shenglingdezhongdianjian(...r))
-    }, "-"), c("span", eu, T(i.jinjifra[12]), 1), c("button", {
-        class: "changecount",
-        onClick: t[37] || (t[37] = (...r) => o.shenglingdezhongdianjia && o.shenglingdezhongdianjia(...r))
-    }, "+"), k(c("input", {
-        class: "shuru1",
-        "onUpdate:modelValue": t[38] || (t[38] = r => i.jinjifra[12] = r),
-        type: "text",
-        maxlength: "2"
-    }, null, 512), [
-        [H, i.jinjifra[12]]
-    ]), _(T(i.jinjifra[12] * 90), 1)])])])
-}
+    function tu(e, t, n, s, i, o) {
+        return we(), Ce("div", Ol, [
+            c("div", null, " 紧急作战得分:" + T(o.jinjiscore), 1),
+            c("div", null, [
+                c("div", null, [
+                    _("冰海疑影 (15)"),
+                    c("span", aa1, [
+                        c("button", {
+                            class: "changecount",
+                            onClick: t[0] || (t[0] = (...r) => o.binghaiyiyingjian && o.binghaiyiyingjian(...r))
+                        }, "-"),
+                        c("span", aa2, T(i.jinjifra[0]), 1),
+                        c("button", {
+                            class: "changecount",
+                            onClick: t[1] || (t[1] = (...r) => o.binghaiyiyingjia && o.binghaiyiyingjia(...r))
+                        }, "+"),
+                        k(c("input", {
+                            class: "shuru1",
+                            "onUpdate:modelValue": t[2] || (t[2] = r => i.jinjifra[0] = r),
+                            type: "text",
+                            maxlength: "2"
+                        }, null, 512), [
+                            [H, i.jinjifra[0]]
+                        ]),
+                        _(T(i.jinjifra[0] * 15), 1) 
+                    ])
+                ]),
+                c("div", null, [ 
+                    _("冰海疑影无漏 (25)"),
+                    c("span", ab1, [
+                        c("button", {
+                            class: "changecount",
+                            onClick: t[3] || (t[3] = (...r) => o.binghaiyiyingwuloujian && o.binghaiyiyingwuloujian(...r))
+                        }, "-"),
+                        c("span", ab2, T(i.jinjifra[1]), 1),
+                        c("button", {
+                            class: "changecount",
+                            onClick: t[4] || (t[4] = (...r) => o.binghaiyiyingwuloujia && o.binghaiyiyingwuloujia(...r))
+                        }, "+"),
+                        k(c("input", {
+                            class: "shuru1",
+                            "onUpdate:modelValue": t[5] || (t[5] = r => i.jinjifra[1] = r),
+                            type: "text",
+                            maxlength: "2"
+                        }, null, 512), [
+                            [H, i.jinjifra[1]]
+                        ]),
+                        _(T(i.jinjifra[1] * 25), 1) 
+                    ])
+                ]),
+                c("div", null, [
+                    _("冰海疑影路网（25）"),
+                    c("span", ac1, [
+                        c("button", {
+                            class: "changecount",
+                            onClick: t[6] || (t[6] = (...r) => o.binghaiyiyingluwangjian && o.binghaiyiyingluwangjian(...r))
+                        }, "-"),
+                        c("span", ac2, T(i.jinjifra[2]), 1),
+                        c("button", {
+                            class: "changecount",
+                            onClick: t[7] || (t[7] = (...r) => o.binghaiyiyingluwangjia && o.binghaiyiyingluwangjia(...r))
+                        }, "+"),
+                        k(c("input", {
+                            class: "shuru1",
+                            "onUpdate:modelValue": t[8] || (t[8] = r => i.jinjifra[2] = r),
+                            type: "text",
+                            maxlength: "2"
+                        }, null, 512), [
+                            [H, i.jinjifra[2]]
+                        ]),
+                        _(T(i.jinjifra[2] * 25), 1) 
+                    ])
+                ]),
+                c("div", null, [
+                    _("冰海疑影路网无漏（35）"),
+                    c("span", ad1, [
+                        c("button", {
+                            class: "changecount",
+                            onClick: t[9] || (t[9] = (...r) => o.binghaiyiyingluwangwuloujian && o.binghaiyiyingluwangwuloujian(...r))
+                        }, "-"),
+                        c("span", ad2, T(i.jinjifra[3]), 1),
+                        c("button", {
+                            class: "changecount",
+                            onClick: t[10] || (t[10] = (...r) => o.binghaiyiyingluwangwuloujia && o.binghaiyiyingluwangwuloujia(...r))
+                        }, "+"),
+                        k(c("input", {
+                            class: "shuru1",
+                            "onUpdate:modelValue": t[11] || (t[11] = r => i.jinjifra[3] = r),
+                            type: "text",
+                            maxlength: "2"
+                        }, null, 512), [
+                            [H, i.jinjifra[3]]
+                        ]),
+                        _(T(i.jinjifra[3] * 35), 1) 
+                    ])
+                ]),          
+            ]),
+        ]);
+    }
+    
+    
 const nu = Ee(zl, [
         ["render", tu]
     ]),
